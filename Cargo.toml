@@ -1,9 +1,8 @@
 [package]
-name = "helloworld"
+name = "{{project-name}}"
 version = "0.1.0"
-authors = ["canxin <1969730106@qq.com>"]
+authors = ["{{authors}}"]
 edition = "2021"
-license = "MIT OR Apache-2.0"
 
 [dependencies]
 hal = { package = "esp32s3-hal", version = "0.13.0" }

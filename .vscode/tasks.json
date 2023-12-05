@@ -1,0 +1,99 @@
+{
+    // Replace "xtensa-esp32s3-none-elf" to your target platfrom
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "EspFlash Release",
+            "type": "shell",
+            "command": "espflash",
+            "args": [
+                "flash",
+                "${workspaceFolder}/target/xtensa-esp32s3-none-elf/release/${fileBasenameNoExtension}",
+            ],
+            "group": "build",
+            "dependsOn": [
+                "cargo build release",
+            ],
+        },
+        {
+            "label": "EspFlash Debug",
+            "type": "shell",
+            "command": "espflash",
+            "args": [
+                "flash",
+                "${workspaceFolder}/target/xtensa-esp32s3-none-elf/debug/${fileBasenameNoExtension}",
+            ],
+            "group": "build",
+            "dependsOn": [
+                "cargo build debug",
+            ],
+        },
+        {
+            "label": "EspMonitor",
+            "type": "shell",
+            "command": "espflash",
+            "args": [
+                "monitor",
+                "--elf",
+                "${workspaceFolder}/target/xtensa-esp32s3-none-elf/debug/${fileBasenameNoExtension}",
+                "--log-format",
+                "defmt"
+            ],
+            "group": "none",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+        {
+            "label": "EspFlash Erase",
+            "type": "shell",
+            "command": "espflash",
+            "args": [
+                "erase-flash",
+            ],
+            "group": "none",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "close": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "cargo build debug",
+            "type": "shell",
+            "command": "~/.cargo/bin/cargo", // note: full path to the cargo
+            "args": [
+                "build",
+                "--bin",
+                "${fileBasenameNoExtension}",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        },
+        {
+            "label": "cargo build release",
+            "type": "shell",
+            "command": "~/.cargo/bin/cargo", // note: full path to the cargo
+            "args": [
+                "build",
+                "--release",
+                "--bin",
+                "${fileBasenameNoExtension}",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        },
+    ],
+}

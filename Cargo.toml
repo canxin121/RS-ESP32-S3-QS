@@ -1,0 +1,13 @@
+[package]
+name = "helloworld"
+version = "0.1.0"
+authors = ["canxin <1969730106@qq.com>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+hal = { package = "esp32s3-hal", version = "0.13.0" }
+esp-backtrace = { version = "0.9.0", features = ["esp32s3", "panic-handler", "exception-handler", "print-jtag-serial"] }
+esp-println = { version = "0.7.0", default-features = false, features = [ "esp32s3","defmt","jtag_serial"] }
+defmt = "0.3.5"
+nb = "1.1.0"

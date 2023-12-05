@@ -1,0 +1,62 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "./target/xtensa-esp32s3-none-elf/debug/${fileBasenameNoExtension}",
+            "request": "attach",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "interface": "jtag",
+            "servertype": "openocd",
+            "svdPath": "esp32s3.base.svd",
+            "serverpath": "D:/programs/openocd-esp32/bin/openocd.exe", //!MODIFY
+            "gdbPath": "xtensa-esp32s3-elf-gdb.exe", //!MODIFY
+            "toolchainPrefix": "xtensa-esp32-elf",
+            "openOCDPreConfigLaunchCommands": [
+                "set ESP_RTOS none"
+            ],
+            "configFiles": [
+                "esp_usb_jtag.cfg",
+                "esp32s3.cfg"
+            ],
+            "overrideAttachCommands": [
+                "set remote hardware-watchpoint-limit 2",
+                "mon halt",
+                "flushregs"
+            ],
+            "overrideRestartCommands": [
+                "mon reset halt",
+                "flushregs",
+                "c"
+            ],
+        },
+        {
+            "name": "EspMonitor",
+            "type": "shell",
+            "request": "launch",
+            "command": "",
+            "preLaunchTask": "EspMonitor"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "OpenOCD Debug with Defmt",
+            "configurations": [
+                "Cortex Debug",
+                "EspMonitor",
+            ],
+            "stopAll": true,
+            "preLaunchTask": "EspFlash Debug",
+            "presentation": {
+                "hidden": false,
+                "group": "Debug",
+                "order": 0
+            },
+        }
+    ]
+}
